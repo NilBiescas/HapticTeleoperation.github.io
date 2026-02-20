@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Creation of a haptic teleorobotics system with the Franka robotic arm and exploration of learning from demonstration techniques</title>
-  <meta name="description" content="Haptic teleoperation of a Franka Panda using a Falcon device, plus Learning from Demonstration with GMM/GMR and TP-GMM." />
+  <meta name="description" content="Final presentation: teleoperation of a Franka Panda with a Falcon haptic device, plus Learning from Demonstration using GMM/GMR and TP-GMM." />
 
   <style>
     :root{
@@ -24,10 +24,11 @@
     html { scroll-behavior: smooth; }
     body{
       margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background: radial-gradient(1200px 700px at 15% 10%, rgba(122,162,255,0.25), transparent 60%),
-                  radial-gradient(900px 600px at 80% 20%, rgba(141,240,214,0.12), transparent 55%),
-                  var(--bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(122,162,255,0.25), transparent 60%),
+        radial-gradient(900px 600px at 80% 20%, rgba(141,240,214,0.12), transparent 55%),
+        var(--bg);
       color: var(--text);
       line-height: 1.55;
     }
@@ -35,7 +36,7 @@
     a:hover{ text-decoration: underline; }
     .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 28px 20px 64px; }
 
-    /* Top nav */
+    /* Nav */
     .nav{
       display: flex;
       align-items: center;
@@ -105,6 +106,18 @@
       transform: rotate(12deg);
       pointer-events: none;
     }
+    .tag{
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(15,22,38,0.55);
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
     h1{
       margin: 0 0 10px;
       font-size: clamp(26px, 3.2vw, 44px);
@@ -114,7 +127,7 @@
     .sub{
       margin: 0;
       color: var(--muted);
-      max-width: 80ch;
+      max-width: 86ch;
       font-size: 15px;
     }
     .kpi{
@@ -164,6 +177,7 @@
     }
     .box p, .box li{ color: var(--muted); }
     ul{ margin: 10px 0 0; padding-left: 18px; }
+
     code, pre{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 12.5px;
@@ -176,32 +190,6 @@
       background: rgba(7,10,16,0.65);
       overflow: auto;
       color: #d9e6ff;
-    }
-
-    /* Timeline */
-    .timeline{
-      display: grid;
-      gap: 12px;
-      margin-top: 10px;
-    }
-    .titem{
-      display: grid;
-      grid-template-columns: 120px 1fr;
-      gap: 12px;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(15,22,38,0.55);
-    }
-    .tdate{
-      color: var(--text);
-      font-size: 13px;
-      opacity: 0.95;
-      white-space: nowrap;
-    }
-    .tdesc{
-      color: var(--muted);
-      font-size: 13px;
     }
 
     /* Videos */
@@ -239,12 +227,10 @@
       opacity: 0.95;
     }
 
-    /* Responsive */
     @media (max-width: 900px){
       .kpi{ grid-template-columns: 1fr; }
       .grid{ grid-template-columns: 1fr; }
       .videos{ grid-template-columns: 1fr; }
-      .titem{ grid-template-columns: 1fr; }
       .nav{ border-radius: 18px; }
     }
   </style>
@@ -255,194 +241,173 @@
     <div class="nav">
       <div class="brand">
         <span class="dot"></span>
-        <strong>RMIL Project</strong>
+        <strong>RMIL Project, Final Presentation</strong>
       </div>
 
       <div class="navlinks" aria-label="Page sections">
-        <a class="pill" href="#overview">Overview</a>
-        <a class="pill" href="#system">System</a>
-        <a class="pill" href="#teleop">Teleoperation</a>
-        <a class="pill" href="#feedback">Force feedback</a>
-        <a class="pill" href="#lfd">Learning from demonstration</a>
+        <a class="pill" href="#outline">Outline</a>
+        <a class="pill" href="#intro">Introduction</a>
+        <a class="pill" href="#remote">Remote control</a>
+        <a class="pill" href="#lfd">LfD</a>
         <a class="pill" href="#videos">Videos</a>
         <a class="pill" href="#conclusion">Conclusion</a>
       </div>
     </div>
 
     <header class="hero" id="top">
+      <div class="tag">RMIL Project Final Presentation, 18.08</div>
+
       <h1>Creation of a haptic teleorobotics system with the Franka robotic arm and exploration of learning from demonstration techniques</h1>
+
       <p class="sub">
-        We built a leader, follower setup where a Falcon haptic device controls a Franka Panda robot in real time.
-        The operator can command position, orientation, and the gripper, and can feel basic contact through force feedback.
-        Then we used Learning from Demonstration to learn and reproduce trajectories, first with GMM plus GMR, then with TP-GMM to generalize across task frames.
+        This page summarizes the final presentation.
+        We teleoperated a Franka Panda robot using a Falcon haptic device through ROS, then explored Learning from Demonstration for trajectory learning.
+        The learning part starts with GMM plus GMR, then moves to Task-Parameterized GMM to improve generalization across reference frames.
       </p>
 
       <div class="kpi" role="list">
         <div class="card" role="listitem">
           <b>Remote control</b>
-          <span>Teleoperation with workspace adjustment, gripper control, and orientation control.</span>
+          <span>Two PCs, ROS networking, Cartesian impedance control for position and orientation, gripper actions.</span>
         </div>
         <div class="card" role="listitem">
-          <b>Haptic feedback</b>
-          <span>Force estimates from the robot state, filtered to reduce noise.</span>
+          <b>Force feedback</b>
+          <span>No force sensor, estimate external wrench from robot state and filter noise.</span>
         </div>
         <div class="card" role="listitem">
-          <b>LfD</b>
-          <span>Trajectory learning with GMM/GMR, then TP-GMM for new reference frames.</span>
+          <b>Learning from Demonstration</b>
+          <span>Learn P(x, v) with GMM, reproduce with GMR, then generalize with TP-GMM.</span>
         </div>
       </div>
     </header>
 
-    <section id="overview">
-      <h2>Project goal</h2>
+    <section id="outline">
+      <h2>Outline</h2>
       <div class="grid">
         <div class="box">
-          <h3>What we wanted</h3>
+          <h3>Remote Control</h3>
           <ul>
-            <li>Control a robot arm remotely with a haptic device, in a stable and usable way.</li>
-            <li>Support precise manipulation: position, orientation, and gripper actions.</li>
-            <li>Add basic force feedback so the operator can feel contact.</li>
-            <li>Record demonstrations and learn trajectories that can be reproduced and adapted.</li>
+            <li>System connection overview</li>
+            <li>Position, orientation, and gripper control</li>
+            <li>Force feedback</li>
+            <li>Results</li>
           </ul>
         </div>
 
         <div class="box">
-          <h3>Why it matters</h3>
+          <h3>Learning from Demonstration</h3>
           <ul>
-            <li>Teleoperation is useful when autonomy is risky, or when you need high precision.</li>
-            <li>Learning from Demonstration reduces manual programming effort for complex tasks.</li>
-            <li>Generalization lets the robot reuse skills in new setups and new task frames.</li>
+            <li>Gaussian Mixture Model and Gaussian Mixture Regression</li>
+            <li>Task-Parameterized Gaussian Mixture Model</li>
+            <li>Conclusion</li>
           </ul>
-        </div>
-      </div>
-
-      <div class="timeline" aria-label="Progress timeline">
-        <div class="titem">
-          <div class="tdate">15.07.2025</div>
-          <div class="tdesc">Connected to the robot with libfranka and controlled it using a keyboard example controller.</div>
-        </div>
-        <div class="titem">
-          <div class="tdate">22.07.2025</div>
-          <div class="tdesc">Connected the haptic device through FrankaROS and controlled the robot with a Cartesian impedance controller.</div>
-        </div>
-        <div class="titem">
-          <div class="tdate">29.07.2025</div>
-          <div class="tdesc">Added workspace adjustment, fast and slow modes, plus gripper actions for move and grasp.</div>
-        </div>
-        <div class="titem">
-          <div class="tdate">05.08.2025</div>
-          <div class="tdesc">Added orientation control with a button-held rotation mode and dominant-axis selection.</div>
-        </div>
-        <div class="titem">
-          <div class="tdate">12.08.2025</div>
-          <div class="tdesc">Implemented Learning from Demonstration with GMM/GMR and later TP-GMM for better generalization.</div>
         </div>
       </div>
     </section>
 
-    <section id="system">
-      <h2>System setup</h2>
+    <section id="intro">
+      <h2>Introduction</h2>
       <div class="grid">
         <div class="box">
-          <h3>Leader, follower architecture</h3>
-          <p>
-            We used a two-PC setup with ROS networking.
-            PC1 reads the Falcon haptic device and publishes commands, PC2 runs the robot control stack and forwards commands to the Franka Panda over TCP/IP.
-          </p>
+          <h3>Remote Control</h3>
           <ul>
-            <li><b>Leader side:</b> Falcon device, ROS client node</li>
-            <li><b>Follower side:</b> ROS master and control node, Franka ROS interface</li>
+            <li><b>Idea:</b> control a robot in real time using a haptic device.</li>
+            <li><b>Applications:</b> remote surgery, hazardous environments, search and rescue.</li>
+            <li><b>Why:</b> when precision or safety is critical, teleoperation can be more reliable than full autonomy.</li>
           </ul>
         </div>
 
         <div class="box">
-          <h3>Core idea</h3>
-          <p>
-            The haptic device sends target motion commands.
-            The robot executes them through an impedance controller so motion stays smooth, and contact does not cause unstable behavior.
-          </p>
-          <pre><code>Leader (Falcon)  →  ROS topics  →  Follower (Robot control)  →  Franka Panda</code></pre>
+          <h3>Learning from Demonstration</h3>
+          <ul>
+            <li><b>Idea:</b> robots learn trajectories from human demonstrations.</li>
+            <li><b>Applications:</b> assembly, complex manipulation, dynamic environments.</li>
+            <li><b>Why:</b> generalize from demonstrations to new tasks, which helps adaptability.</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <section id="teleop">
-      <h2>Teleoperation controls</h2>
+    <section id="remote">
+      <h2>Remote control</h2>
 
       <div class="grid">
+        <div class="box">
+          <h3>System connection overview</h3>
+          <ul>
+            <li>Two PCs connected via ROS.</li>
+            <li>PC2 connects to the robot over TCP/IP using ROS.</li>
+          </ul>
+          <pre><code>PC1 (Falcon device) → ROS topics → PC2 (control node) → Franka Panda</code></pre>
+        </div>
+
         <div class="box">
           <h3>Position control</h3>
           <p>
-            We used Cartesian impedance control for end-effector position.
-            Commands come in as a velocity, then integrate into a desired position.
+            We used Cartesian impedance control.
+            The haptic device provides a desired Cartesian velocity, and we integrate it to get a desired position.
           </p>
           <ul>
-            <li>Controller output is converted to joint torques through the robot Jacobian.</li>
-            <li>Command stream comes from a ROS topic (example: <code>LFcommand</code>).</li>
+            <li>Example command topic: <code>LFcommand</code></li>
+            <li>Cartesian control force (typical form): <code>F = K(x_d - x) - D x_dot</code></li>
+            <li>Map to joint torques (typical form): <code>tau = J^T F + C</code></li>
           </ul>
         </div>
 
         <div class="box">
           <h3>Orientation control</h3>
           <p>
-            Orientation control is also impedance-based, but uses quaternion math to compute the orientation error and desired angular velocity.
-            Commands can be sent on a separate ROS topic (example: <code>OFcommand</code>).
+            Orientation also uses impedance control, but the error comes from quaternion-based orientation difference.
+            We compute an angular velocity command from that error.
           </p>
           <ul>
-            <li>Hold a button to enter rotation mode.</li>
-            <li>Rotate around roll, pitch, and yaw, and only apply the dominant axis to keep it stable.</li>
+            <li>Example command topic: <code>OFcommand</code></li>
+            <li>We compute orientation error from desired and current quaternion.</li>
           </ul>
         </div>
 
         <div class="box">
           <h3>Workspace adjustment</h3>
           <p>
-            The Falcon workspace is small, but the robot workspace is large.
-            To avoid “tiny hand motion, huge robot motion”, we added a clutch style strategy.
+            The Falcon workspace is small and the robot workspace is large, so we used a clutch style strategy.
+            You hold a button to enable motion, and let go to keep the robot still.
           </p>
           <ul>
-            <li><b>Button 0 (position):</b> long press to move, short press toggles fast and slow mode.</li>
-            <li><b>Button 1 (orientation):</b> long press to rotate, no press means hold still.</li>
+            <li><b>Button 0 (position):</b> long press moves, short press toggles fast or slow mode, no press holds still.</li>
+            <li><b>Button 1 (orientation):</b> long press moves, no press holds still.</li>
           </ul>
         </div>
 
         <div class="box">
           <h3>Gripper control</h3>
           <p>
-            We used the Franka gripper actions.
-            Two buttons move the fingers in small steps, and a combined press triggers a grasp.
+            We used the <code>franka_gripper</code> package with <code>MoveAction</code> and <code>GraspAction</code>.
           </p>
           <ul>
-            <li><b>Button 2:</b> close by a small step</li>
-            <li><b>Button 3:</b> open by a small step</li>
+            <li><b>Button 2:</b> close by 5 mm</li>
+            <li><b>Button 3:</b> open by 5 mm</li>
             <li><b>Button 2 + 3:</b> grasp action</li>
           </ul>
         </div>
-      </div>
-    </section>
 
-    <section id="feedback">
-      <h2>Force feedback</h2>
-      <div class="grid">
         <div class="box">
-          <h3>How we estimated force</h3>
+          <h3>Force feedback</h3>
           <p>
-            We did not use a dedicated force sensor.
-            Instead, we used the robot’s estimated external wrench at the end-effector from the robot state (for example, <code>O_F_ext_hat_K</code>).
+            We did not use a force sensor.
+            Instead we used <code>robot_state.O_F_ext_hat_K</code>, which estimates external force at the end effector.
+            It is noisy, so we applied a threshold filter before sending it back to the haptic device.
           </p>
           <ul>
-            <li>It is noisy, so we applied a threshold filter.</li>
-            <li>After filtering, contact becomes noticeable on the haptic device.</li>
+            <li>Example feedback topic: <code>FLfeedback</code></li>
           </ul>
         </div>
 
         <div class="box">
-          <h3>What this enables</h3>
+          <h3>Remote control result</h3>
           <p>
-            With basic feedback, the operator can “feel” when the robot touches a surface.
-            This is not perfect, but it is a useful starting point for safer manipulation.
+            Final result: being able to grasp an object at the desired position and orientation.
+            The main demo is included as Video 1 below.
           </p>
-          <pre><code>Robot state forces → filter → ROS topic (example: FLfeedback) → haptic feedback</code></pre>
         </div>
       </div>
     </section>
@@ -452,67 +417,95 @@
 
       <div class="grid">
         <div class="box">
-          <h3>Data collection</h3>
-          <p>
-            We recorded demonstrations by teleoperating the robot from an initial pose.
-            We stored position and velocity along x, y, and z over time.
-          </p>
+          <h3>Why do robots need to learn?</h3>
           <ul>
-            <li>Each demo is a trajectory of paired samples: (position, velocity).</li>
-            <li>This turns teleoperation into a data source for learning.</li>
+            <li>Programming every single action is costly and time consuming.</li>
+            <li>There is a huge number of tasks.</li>
+            <li>Environments change, sometimes dynamically.</li>
           </ul>
         </div>
 
         <div class="box">
-          <h3>GMM + GMR</h3>
-          <p>
-            We modeled the joint distribution of position and velocity with a Gaussian Mixture Model (GMM).
-            Then we used Gaussian Mixture Regression (GMR) to compute a desired velocity given the current position.
-          </p>
+          <h3>What to learn, and how?</h3>
           <ul>
-            <li>GMM parameters were learned with EM.</li>
-            <li>We used BIC to pick a good number of mixture components.</li>
+            <li><b>What:</b> robot trajectories, features, state actions.</li>
+            <li><b>How:</b> supervised learning, Learning from Demonstration, reinforcement learning, unsupervised learning.</li>
           </ul>
         </div>
 
         <div class="box">
-          <h3>Why TP-GMM</h3>
-          <p>
-            Plain GMM plus GMR does not generalize well when the task reference frame changes.
-            We used Task-Parameterized GMM to encode the task in multiple frames.
-          </p>
+          <h3>Robot trajectories, collecting demonstrations</h3>
           <ul>
-            <li>Task frames describe situations in the environment.</li>
-            <li>This improves extrapolation and reuse across setups.</li>
+            <li>Put the robot in the initial position.</li>
+            <li>Perform teleoperation.</li>
+            <li>Save position and velocity along x, y, z.</li>
+          </ul>
+          <pre><code>Each demo: (x, v) pairs over time</code></pre>
+        </div>
+
+        <div class="box">
+          <h3>GMM: learn the joint distribution P(x, v)</h3>
+          <ul>
+            <li>Model the underlying joint probability <code>P(x, v)</code>.</li>
+            <li>Learn GMM parameters using Expectation Maximization (E-step, M-step).</li>
+            <li>Use BIC to choose the number of mixture states.</li>
           </ul>
         </div>
 
         <div class="box">
-          <h3>TP-GMM reproduction</h3>
+          <h3>GMR: reproduce a trajectory</h3>
           <p>
-            During reproduction we merge Gaussians across task parameters, transform them to the new situation, then apply GMR again.
-            In the final experiments, we collected multiple trajectories with different end frames and generated a new one.
+            Having <code>P(x, v)</code> is not enough to directly output a velocity.
+            With GMR we condition on the current position to predict the desired velocity.
           </p>
           <ul>
-            <li>End result: better trajectory generation in new frames.</li>
-            <li>Still sensitive to parameter choices and to how task frames are defined.</li>
+            <li>Split into input and output dimensions.</li>
+            <li>Compute responsibilities at the current x.</li>
+            <li>Compute <code>v | x</code> for control.</li>
+          </ul>
+          <p class="sub">The GMM plus GMR demo is included as Video 2.</p>
+        </div>
+
+        <div class="box">
+          <h3>Why TP-GMM?</h3>
+          <ul>
+            <li>GMM plus GMR does not generalize well to different reference frames.</li>
+            <li>Task parameters describe situations in the environment.</li>
+            <li>Goal: better learning speed and better extrapolation.</li>
+          </ul>
+        </div>
+
+        <div class="box">
+          <h3>TP-GMM: training and reproduction</h3>
+          <ul>
+            <li>Use EM to fit a task-parameterized model.</li>
+            <li>During reproduction, merge Gaussians from the same task parameter.</li>
+            <li>Transform to the new situation, then apply GMR to get velocity.</li>
+          </ul>
+          <p class="sub">The TP-GMM demo is included as Video 3.</p>
+        </div>
+
+        <div class="box">
+          <h3>Experiment snapshot</h3>
+          <ul>
+            <li>Collected 8 trajectories with different end frames, then generated 1.</li>
           </ul>
         </div>
       </div>
     </section>
 
     <section id="videos">
-      <h2>Demo videos</h2>
+      <h2>Videos</h2>
       <p class="sub">
-        Add your videos into <code>assets/videos/</code> using the filenames below.
-        When the files exist, the players will work automatically.
+        Put your clips into <code>assets/videos/</code> using the filenames below.
+        If a file is missing, the player will stay blank until you upload it.
       </p>
 
       <div class="videos">
         <div class="vcard">
           <div class="vhead">
-            <b>Video 1: Teleoperation overview</b>
-            <span>Falcon device controlling the Franka Panda through ROS and Franka ROS.</span>
+            <b>Video 1: Remote control result</b>
+            <span>Grasp an object at the desired position and orientation (final teleop result).</span>
           </div>
           <video controls preload="metadata">
             <source src="assets/videos/video1.mp4" type="video/mp4" />
@@ -522,8 +515,8 @@
 
         <div class="vcard">
           <div class="vhead">
-            <b>Video 2: Grasping a battery</b>
-            <span>Position control plus gripper actions to pick and grasp an object.</span>
+            <b>Video 2: GMM + GMR reproduction</b>
+            <span>Trajectory reproduction from demonstrations using GMM learning and GMR conditioning.</span>
           </div>
           <video controls preload="metadata">
             <source src="assets/videos/video2.mp4" type="video/mp4" />
@@ -533,8 +526,8 @@
 
         <div class="vcard">
           <div class="vhead">
-            <b>Video 3: Orientation control</b>
-            <span>Button-held rotation mode, dominant axis selection for stability.</span>
+            <b>Video 3: TP-GMM reproduction</b>
+            <span>Generalization to new task frames with task-parameterized GMM.</span>
           </div>
           <video controls preload="metadata">
             <source src="assets/videos/video3.mp4" type="video/mp4" />
@@ -544,8 +537,8 @@
 
         <div class="vcard">
           <div class="vhead">
-            <b>Video 4: Learning from Demonstration with GMM + GMR</b>
-            <span>Reproduced trajectory from a small set of demonstrations.</span>
+            <b>Optional Video 4</b>
+            <span>Extra clip, for example workspace adjustment or orientation control.</span>
           </div>
           <video controls preload="metadata">
             <source src="assets/videos/video4.mp4" type="video/mp4" />
@@ -555,8 +548,8 @@
 
         <div class="vcard">
           <div class="vhead">
-            <b>Video 5: TP-GMM generalization</b>
-            <span>Reproduction in a new task frame, showing better generalization.</span>
+            <b>Optional Video 5</b>
+            <span>Extra clip, for example a second TP-GMM run or comparison.</span>
           </div>
           <video controls preload="metadata">
             <source src="assets/videos/video5.mp4" type="video/mp4" />
@@ -566,49 +559,61 @@
 
         <div class="vcard">
           <div class="vhead">
-            <b>Optional: Add more</b>
-            <span>If you have more clips, duplicate a card and point to video6.mp4, video7.mp4, etc.</span>
+            <b>Tip</b>
+            <span>Use MP4 (H.264). Keep files small so GitHub Pages loads fast.</span>
           </div>
           <div style="padding:12px;color:var(--muted);">
-            Tip: keep videos small so GitHub Pages loads fast.
-            MP4 with H.264 works in most browsers.
+            If you prefer different filenames, rename them here and in your repo.
           </div>
         </div>
       </div>
     </section>
 
     <section id="conclusion">
-      <h2>Conclusion and next steps</h2>
+      <h2>Conclusion</h2>
       <div class="grid">
         <div class="box">
-          <h3>What we achieved</h3>
+          <h3>Achievements</h3>
           <ul>
             <li>Remote control of the Franka Panda with a Falcon haptic device.</li>
-            <li>Workspace adjustment without interrupting the task.</li>
+            <li>Workspace adjustment without interruption.</li>
             <li>Position, orientation, and gripper control, plus basic force feedback.</li>
-            <li>LfD pipeline for trajectory learning and generalization (GMM/GMR and TP-GMM).</li>
+            <li>Learning from Demonstration for trajectory generalization.</li>
           </ul>
         </div>
 
         <div class="box">
-          <h3>Limitations and future work</h3>
+          <h3>Limitations</h3>
           <ul>
-            <li>Gripper force still needs manual tuning for objects with different weights.</li>
-            <li>No vision sensor yet, so the operator still needs a direct view of the robot.</li>
-            <li>LfD does not handle dynamic environments, and task frames are manual.</li>
-            <li>Next: a haptic device with rotation, vision integration, and more adaptive grasping.</li>
+            <li>Gripper force must be predefined for objects with different weights.</li>
+            <li>No vision sensor, operator still needs direct view of the robot.</li>
+            <li>LfD: no dynamic environment handling, manual task frames, sensitive parameters.</li>
           </ul>
+        </div>
+
+        <div class="box">
+          <h3>Future work</h3>
+          <ul>
+            <li>Upgrade to a more advanced haptic device with rotation.</li>
+            <li>Integrate vision sensors for true remote operation.</li>
+            <li>Adaptive gripper control for different objects.</li>
+            <li>Handle dynamic environments.</li>
+          </ul>
+        </div>
+
+        <div class="box">
+          <h3>Contact</h3>
+          <p class="sub">
+            Nil Biescas, Yisheng Sun, Qingping Hu
+            <br />
+            Update this block with your preferred contact links before publishing.
+          </p>
         </div>
       </div>
     </section>
 
     <footer>
-      <div>
-        <b>Authors:</b> Nil Biescas, Yisheng Sun, Qingping Hu
-      </div>
-      <div style="margin-top:6px;">
-        Replace this footer with your preferred contact info before publishing.
-      </div>
+      Thank you for your attention!
     </footer>
   </div>
 </body>

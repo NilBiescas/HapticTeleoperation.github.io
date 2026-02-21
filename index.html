@@ -1,5 +1,7 @@
 <!doctype html>
-<html:contentReference[oaicite:2]{index=2}<meta charset="utf-8" />
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Creation of a haptic teleorobotics system with the Franka robotic arm and exploration of learning from demonstration techniques</title>
   <meta name="description" content="Final presentation: teleoperation of a Franka Panda with a Falcon haptic device, plus Learning from Demonstration using GMM/GMR and TP-GMM." />
@@ -34,7 +36,6 @@
     a:hover{ text-decoration: underline; }
     .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 28px 20px 64px; }
 
-    /* Nav */
     .nav{
       display: flex;
       align-items: center;
@@ -83,7 +84,6 @@
     }
     .pill:hover{ color: var(--text); border-color: rgba(232,238,252,0.25); }
 
-    /* Hero */
     .hero{
       margin-top: 26px;
       padding: 34px 26px;
@@ -143,7 +143,6 @@
     .kpi .card b{ display:block; font-size: 13px; margin-bottom: 6px; }
     .kpi .card span{ color: var(--muted); font-size: 13px; }
 
-    /* Sections */
     section{
       margin-top: 22px;
       padding: 22px 18px;
@@ -190,7 +189,6 @@
       color: #d9e6ff;
     }
 
-    /* Media (images) */
     .media{
       margin-top: 12px;
       border: 1px solid var(--line);
@@ -217,7 +215,6 @@
     }
     .gallery .media{ margin-top: 0; }
 
-    /* Videos */
     .videos{
       display: grid;
       gap: 14px;
@@ -243,7 +240,6 @@
       background: #000;
     }
 
-    /* Footer */
     footer{
       margin-top: 22px;
       color: var(--muted);
@@ -385,7 +381,7 @@
           </ul>
 
           <div class="media">
-            <img src="./assets/images/position_control.png" alt="Position control slide with Cartesian impedance control and LFcommand." loading="lazy" decoding="async" />
+            <img src="./assets/images/position_control.png" alt="Position control details with Cartesian impedance control and LFcommand." loading="lazy" decoding="async" />
             <div class="caption">Position control details (slide 29).</div>
           </div>
         </div>
@@ -402,7 +398,7 @@
           </ul>
 
           <div class="media">
-            <img src="./assets/images/orientation_control.png" alt="Orientation control slide with quaternion error and OFcommand." loading="lazy" decoding="async" />
+            <img src="./assets/images/orientation_control.png" alt="Orientation control details with quaternion error and OFcommand." loading="lazy" decoding="async" />
             <div class="caption">Orientation control details (slide 30).</div>
           </div>
         </div>
@@ -454,11 +450,6 @@
             Final result: being able to grasp an object at the desired position and orientation.
             The main demo is included as Video 1 below.
           </p>
-
-          <div class="media">
-            <img src="./assets/images/remote_control_results.png" alt="Remote control results slide showing grasping at target pose." loading="lazy" decoding="async" />
-            <div class="caption">Remote control results (slide 34).</div>
-          </div>
         </div>
       </div>
     </section>
@@ -474,11 +465,6 @@
             <li>There is a huge number of tasks.</li>
             <li>Environments change, sometimes dynamically.</li>
           </ul>
-
-          <div class="media">
-            <img src="./assets/images/lfd_why_learn.png" alt="Slide explaining why robots need to learn, with example illustration." loading="lazy" decoding="async" />
-            <div class="caption">Motivation (slide 35).</div>
-          </div>
         </div>
 
         <div class="box">
@@ -497,11 +483,6 @@
             <li>Save position and velocity along x, y, z.</li>
           </ul>
           <pre><code>Each demo: (x, v) pairs over time</code></pre>
-
-          <div class="media">
-            <img src="./assets/images/lfd_robot_trajectories_teleoperation.png" alt="Teleoperation diagram for collecting robot demonstrations." loading="lazy" decoding="async" />
-            <div class="caption">Collecting demonstrations (slide 37).</div>
-          </div>
         </div>
 
         <div class="box">
@@ -518,7 +499,7 @@
               <div class="caption">Paired (x, v) view (slide 38).</div>
             </div>
             <div class="media">
-              <img src="./assets/images/lfd_gmm_learning.png" alt="GMM learning slide with EM and plotted demonstrations." loading="lazy" decoding="async" />
+              <img src="./assets/images/lfd_gmm_learning.png" alt="GMM learning with EM and plotted demonstrations." loading="lazy" decoding="async" />
               <div class="caption">Learning GMM with EM (slide 39).</div>
             </div>
           </div>
@@ -536,16 +517,6 @@
             <li>Compute <code>v | x</code> for control.</li>
           </ul>
           <p class="sub">The GMM plus GMR demo is included as Video 2.</p>
-
-          <div class="media">
-            <img src="./assets/images/lfd_gmr_reproduction.png" alt="GMR reproduction slide showing conditioning steps and example plots." loading="lazy" decoding="async" />
-            <div class="caption">GMR for reproduction (slide 40).</div>
-          </div>
-
-          <div class="media">
-            <img src="./assets/images/lfd_gmm_gmr_photo.png" alt="Photo slide for GMM plus GMR experiment with the Franka robot." loading="lazy" decoding="async" />
-            <div class="caption">GMM + GMR experiment snapshot (slide 41).</div>
-          </div>
         </div>
 
         <div class="box">
@@ -565,11 +536,6 @@
             <li>Transform to the new situation, then apply GMR to get velocity.</li>
           </ul>
           <p class="sub">The TP-GMM demo is included as Video 3.</p>
-
-          <div class="media">
-            <img src="./assets/images/lfd_tp_gmm_overview.png" alt="TP-GMM overview slide with task parameters and reproduction pipeline." loading="lazy" decoding="async" />
-            <div class="caption">TP-GMM overview (slide 43).</div>
-          </div>
         </div>
 
         <div class="box">
@@ -579,7 +545,7 @@
           </ul>
 
           <div class="media">
-            <img src="./assets/images/lfd_tp_gmm_experiment.png" alt="TP-GMM experiment slide with 3D plot of demonstrations and reproduction." loading="lazy" decoding="async" />
+            <img src="./assets/images/lfd_tp_gmm_experiment.png" alt="TP-GMM experiment summary plot." loading="lazy" decoding="async" />
             <div class="caption">TP-GMM experiment summary (slide 44).</div>
           </div>
         </div>
@@ -590,7 +556,7 @@
       <h2>Videos</h2>
       <p class="sub">
         Put your clips into <code>assets/videos/</code>.
-        These players point to three files. If a file is missing, you will see an empty player until you upload it.
+        These players point to three files.
       </p>
 
       <div class="videos">

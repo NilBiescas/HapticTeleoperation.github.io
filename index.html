@@ -83,7 +83,49 @@
       color: var(--muted);
     }
     .pill:hover{ color: var(--text); border-color: rgba(232,238,252,0.25); }
-
+    /* Rainbow attention pill (Videos) */
+    .pill--rainbow{
+      border: 1px solid transparent;
+      color: var(--text);
+      font-weight: 600;
+    
+      /* dark fill + animated rainbow border */
+      background:
+        linear-gradient(rgba(15,22,38,0.70), rgba(15,22,38,0.70)) padding-box,
+        linear-gradient(
+          90deg,
+          #ff004c,
+          #ff9a00,
+          #ffee00,
+          #00d084,
+          #00aaff,
+          #8a2be2,
+          #ff00c8,
+          #ff004c
+        ) border-box;
+    
+      background-size: 100% 100%, 400% 100%;
+      background-position: 0 0, 0% 50%;
+      animation: rainbowShift 3.5s linear infinite;
+    
+      box-shadow: 0 0 18px rgba(255,255,255,0.06);
+    }
+    
+    .pill--rainbow:hover{
+      text-decoration: none;
+      box-shadow:
+        0 0 22px rgba(255,255,255,0.10),
+        0 0 34px rgba(122,162,255,0.12);
+    }
+    
+    @keyframes rainbowShift{
+      to { background-position: 0 0, 400% 50%; }
+    }
+    
+    /* Accessibility, no motion if user prefers reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .pill--rainbow{ animation: none; }
+    }
     .hero{
       margin-top: 26px;
       padding: 34px 26px;
@@ -266,7 +308,7 @@
         <a class="pill" href="#intro">Introduction</a>
         <a class="pill" href="#remote">Remote control</a>
         <a class="pill" href="#lfd">LfD</a>
-        <a class="pill" href="#videos">Videos</a>
+        <a class="pill pill--rainbow" href="#videos">Videos</a>
         <a class="pill" href="#conclusion">Conclusion</a>
       </div>
     </div>

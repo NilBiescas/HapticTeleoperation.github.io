@@ -261,13 +261,8 @@
 <body>
   <div class="wrap">
     <div class="nav">
-      <div class="brand">
-        <span class="dot"></span>
-        <strong>RMIL Project, Final Presentation</strong>
-      </div>
 
       <div class="navlinks" aria-label="Page sections">
-        <a class="pill" href="#outline">Outline</a>
         <a class="pill" href="#intro">Introduction</a>
         <a class="pill" href="#remote">Remote control</a>
         <a class="pill" href="#lfd">LfD</a>
@@ -277,14 +272,12 @@
     </div>
 
     <header class="hero" id="top">
-      <div class="tag">RMIL Project Final Presentation, 18.08</div>
 
       <h1>Creation of a haptic teleorobotics system with the Franka robotic arm and exploration of learning from demonstration techniques</h1>
 
       <p class="sub">
-        This page summarizes the final presentation.
         We teleoperated a Franka Panda robot using a Falcon haptic device through ROS, then explored Learning from Demonstration for trajectory learning.
-        The learning part starts with GMM plus GMR, then moves to Task-Parameterized GMM to improve generalization across reference frames.
+        The learning part starts with Gaussian Mixture Model (GMM) plus Gaussian Mixture Regression (GMR), then moves to Task-Parameterized GMM to improve generalization across reference frames.
       </p>
 
       <div class="kpi" role="list">
@@ -302,30 +295,6 @@
         </div>
       </div>
     </header>
-
-    <section id="outline">
-      <h2>Outline</h2>
-      <div class="grid">
-        <div class="box">
-          <h3>Remote Control</h3>
-          <ul>
-            <li>System connection overview</li>
-            <li>Position, orientation, and gripper control</li>
-            <li>Force feedback</li>
-            <li>Results</li>
-          </ul>
-        </div>
-
-        <div class="box">
-          <h3>Learning from Demonstration</h3>
-          <ul>
-            <li>Gaussian Mixture Model and Gaussian Mixture Regression</li>
-            <li>Task-Parameterized Gaussian Mixture Model</li>
-            <li>Conclusion</li>
-          </ul>
-        </div>
-      </div>
-    </section>
 
     <section id="intro">
       <h2>Introduction</h2>
@@ -364,7 +333,7 @@
 
           <div class="media">
             <img src="./assets/images/system_connection_overview.png" alt="System connection overview diagram (PC1, PC2, ROS, Franka Panda)." loading="lazy" decoding="async" />
-            <div class="caption">System connection overview (slide 28).</div>
+            <div class="caption">System connection overview.</div>
           </div>
         </div>
 
@@ -382,7 +351,7 @@
 
           <div class="media">
             <img src="./assets/images/position_control.png" alt="Position control details with Cartesian impedance control and LFcommand." loading="lazy" decoding="async" />
-            <div class="caption">Position control details (slide 29).</div>
+            <div class="caption">Position control details.</div>
           </div>
         </div>
 
@@ -399,7 +368,7 @@
 
           <div class="media">
             <img src="./assets/images/orientation_control.png" alt="Orientation control details with quaternion error and OFcommand." loading="lazy" decoding="async" />
-            <div class="caption">Orientation control details (slide 30).</div>
+            <div class="caption">Orientation control details.</div>
           </div>
         </div>
 
@@ -440,7 +409,7 @@
 
           <div class="media">
             <img src="./assets/images/force_feedback.png" alt="Force feedback slide showing O_F_ext_hat_K and threshold filter." loading="lazy" decoding="async" />
-            <div class="caption">Force feedback summary (slide 33).</div>
+            <div class="caption">Force feedback summary.</div>
           </div>
         </div>
 
@@ -496,11 +465,11 @@
           <div class="gallery">
             <div class="media">
               <img src="./assets/images/lfd_pairing_position_velocity.png" alt="Demonstrations paired as position and velocity, scatter plot illustration." loading="lazy" decoding="async" />
-              <div class="caption">Paired (x, v) view (slide 38).</div>
+              <div class="caption">Paired (x, v) view .</div>
             </div>
             <div class="media">
               <img src="./assets/images/lfd_gmm_learning.png" alt="GMM learning with EM and plotted demonstrations." loading="lazy" decoding="async" />
-              <div class="caption">Learning GMM with EM (slide 39).</div>
+              <div class="caption">Learning GMM with EM.</div>
             </div>
           </div>
         </div>
@@ -546,7 +515,7 @@
 
           <div class="media">
             <img src="./assets/images/lfd_tp_gmm_experiment.png" alt="TP-GMM experiment summary plot." loading="lazy" decoding="async" />
-            <div class="caption">TP-GMM experiment summary (slide 44).</div>
+            <div class="caption">TP-GMM experiment summary.</div>
           </div>
         </div>
       </div>
@@ -554,10 +523,6 @@
 
     <section id="videos">
       <h2>Videos</h2>
-      <p class="sub">
-        Put your clips into <code>assets/videos/</code>.
-        These players point to three files.
-      </p>
 
       <div class="videos">
         <div class="vcard">
@@ -603,17 +568,6 @@
             Your browser does not support the video tag.
           </video>
         </div>
-
-        <div class="vcard">
-          <div class="vhead">
-            <b>Tip</b>
-            <span>Use MP4 (H.264). Keep files small so GitHub Pages loads fast.</span>
-          </div>
-          <div style="padding:12px;color:var(--muted);">
-            If you prefer different filenames, rename them here and in your repo.
-          </div>
-        </div>
-      </div>
     </section>
 
     <section id="conclusion">
